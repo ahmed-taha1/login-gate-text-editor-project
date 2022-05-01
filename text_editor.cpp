@@ -112,7 +112,7 @@ int main(){
 void OpenFile(){
     cout << "Please enter a file name: ";  getline(cin,fileName, '\n');
     
-    if(fileName.substr(fileName.size()-4,4)!=".txt") {fileName+=".txt";}
+    if(fileName.find(".txt")==-1) {fileName+=".txt";}
 
 	dataFile.open(fileName,ios::out | ios::app | ios::in);
     data.open(Ndata,ios::out | ios::app | ios::in);
