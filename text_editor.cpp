@@ -114,10 +114,11 @@ void OpenFile(){
     
     if(fileName.find(".txt")==-1) {fileName+=".txt";}
 
-	dataFile.open(fileName,ios::out | ios::app | ios::in);
+	dataFile.open(fileName, ios::in);
     data.open(Ndata,ios::out | ios::app | ios::in);
 
 	if (dataFile.fail()){
+        dataFile.open(fileName,ios::out | ios::app | ios::in);
 		cout << "\nThis is a new file. I created it for you :)" << endl;
         cout << "\nplease wait opening file..." << endl;
         sleep(3);
