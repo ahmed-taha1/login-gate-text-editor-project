@@ -28,7 +28,7 @@
 using namespace std;
 
 // static variables
-fstream dataFile,data;
+fstream dataFile,data1;
 string fileName,Ndata="data.txt";
 bool change=false;
 
@@ -46,6 +46,9 @@ void f8_count_chars();
 void f9_count_lines();
 string f10_search_word();
 void f11_count_words();
+void f12_upper_case();
+void f13_lower_case();
+void f14_first_upper();
 void f15_save();
 
 //the other help functions
@@ -129,6 +132,18 @@ int main(){
                     f11_count_words();
                     menu();
                     break;
+                
+                case 12:
+                    f12_upper_case();
+                    break;
+                
+                case 13:
+                    f13_lower_case();
+                    break;
+                
+                case 14:
+                    f14_first_upper();
+                    break;
 
                 case 15:
                     f15_save();
@@ -146,7 +161,7 @@ int main(){
     }
     dataFile.close();
     f3_empty();
-    data.close();
+    data1.close();
 }
 //-----------------------------------------------------------------------------
 void OpenFile(){
@@ -155,7 +170,7 @@ void OpenFile(){
     if(fileName.find(".txt")==-1) {fileName+=".txt";}
 
 	dataFile.open(fileName, ios::in);
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
 	if (dataFile.fail()){
         dataFile.open(fileName,ios::out | ios::app | ios::in);
@@ -176,14 +191,14 @@ void duplicate(){
     dataFile.close();
     dataFile.open(fileName,ios::out | ios::app | ios::in);
 
-    data.close();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.close();
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
     while (!dataFile.eof()){
         getline(dataFile,s);
-		data << s << '\n';
+		data1 << s << '\n';
     }
-    data.close();
+    data1.close();
     dataFile.close();
 }
 //-----------------------------------------------------------------------------
@@ -194,11 +209,11 @@ void f1_append(){
     system("CLS");
 
     duplicate();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.open(Ndata,ios::out | ios::app | ios::in);
     cout<<"\ntype what you want and when you end press enter and CTRL+Z and enter again to back to main menu\n\n";
     do
     {   getline(cin,s,'\n');
-        data<<s<<'\n';
+        data1<<s<<'\n';
     }while(!cin.eof());
 }
 //-----------------------------------------------------------------------------
@@ -220,10 +235,10 @@ void f2_readFile(){
 void f3_empty(){
     change = true;
     system("CLS");
-    data.close();
+    data1.close();
 
-    data.open(Ndata, ios::out | ios::trunc);
-    data.close();
+    data1.open(Ndata, ios::out | ios::trunc);
+    data1.close();
     cout<<"\n\nDone :)";
     sleep(3);
 }
@@ -235,25 +250,18 @@ void f4_encrypt(){
         change = true;
         system("CLS");
 
-        data.close();
-        data.open(Ndata,ios::out);
+        data1.close();
+        data1.open(Ndata,ios::out);
 
         dataFile.close();
         dataFile.open(fileName,ios::in);
 
       while (!dataFile.eof()) {
-<<<<<<< HEAD
         getline(dataFile,s);
           
         for(int i=0; i<s.size(); i++){ s[i]+=1; }
             
-=======
-          getline(dataFile,s);
-
-          for(int i=0; i<s.size(); i++){ s[i]+=1; }
-
->>>>>>> 2e78ca2559d41fd4c8be3cc16d90b335cca84d98
-		data << s << '\n';
+		data1 << s << '\n';
 	  }
 
         cout<<"\n\nDone :)";
@@ -272,8 +280,8 @@ void f5_decrypt(){
         change = true;
         system("CLS");
 
-        data.close();
-        data.open(Ndata,ios::out | ios::app | ios::in);
+        data1.close();
+        data1.open(Ndata,ios::out | ios::app | ios::in);
 
         dataFile.close();
         dataFile.open(fileName,ios::out | ios::app | ios::in);
@@ -281,7 +289,7 @@ void f5_decrypt(){
         while (!dataFile.eof()){
           getline(dataFile,s);
           for(int i=0; i<s.size(); i++){ s[i]-=1; }
-		data << s << "\n";
+		data1 << s << "\n";
         }
 
         cout<<"\n\nDone :)";
@@ -327,8 +335,8 @@ void f7_count_totalWords(){
 
     dataFile.close();
     dataFile.open(fileName,ios::out | ios::app | ios::in);
-    data.close();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.close();
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
 
     while(dataFile>>word)
@@ -348,8 +356,8 @@ void f8_count_chars(){
 
     dataFile.close();
     dataFile.open(fileName,ios::out | ios::app | ios::in);
-    data.close();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.close();
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
 
 
@@ -371,8 +379,8 @@ string text;
 
     dataFile.close();
     dataFile.open(fileName,ios::out | ios::app | ios::in);
-    data.close();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.close();
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
 
     while (getline(dataFile ,text)){
@@ -393,8 +401,8 @@ string f10_search_word(){
 
     dataFile.close();
     dataFile.open(fileName,ios::out | ios::app | ios::in);
-    data.close();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.close();
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
 
 
@@ -422,8 +430,8 @@ void f11_count_words( ){
 
     dataFile.close();
     dataFile.open(fileName,ios::out | ios::app | ios::in);
-    data.close();
-    data.open(Ndata,ios::out | ios::app | ios::in);
+    data1.close();
+    data1.open(Ndata,ios::out | ios::app | ios::in);
 
 
     while(dataFile>>word)
@@ -439,6 +447,97 @@ cout<<"\nthe number of times ("<<keyWord<<")occured in the file: "<<sum<<endl;
 }
 
 //-----------------------------------------------------------------------------
+void f12_upper_case(){
+    string s;
+    if(!change){
+        change = true;
+        system("CLS");
+
+        data1.close();
+        data1.open(Ndata,ios::out);
+
+        dataFile.close();
+        dataFile.open(fileName,ios::in);
+        while (!dataFile.eof()){
+          getline(dataFile,s);
+          for(int i=0; i<s.size(); i++){s[i]= toupper (s[i]); }
+		data1 << s << "\n";
+        }
+
+        cout<<"\n\nDone :)";
+        sleep(3);
+    }
+    else{
+        cout<<"please save first...";
+        sleep(4);
+
+}
+}
+
+//-----------------------------------------------------------------------------
+
+void f13_lower_case(){
+    string s;
+    if(!change){
+        change = true;
+        system("CLS");
+
+        data1.close();
+        data1.open(Ndata,ios::out);
+
+        dataFile.close();
+        dataFile.open(fileName,ios::in);
+        while (!dataFile.eof()){
+          getline(dataFile,s);
+          for(int i=0; i<s.size(); i++){s[i]= tolower (s[i]); }
+		data1 << s << "\n";
+        }
+
+        cout<<"\n\nDone :)";
+        sleep(3);
+    }
+    else{
+        cout<<"please save first...";
+        sleep(4);
+
+}
+}
+
+//-----------------------------------------------------------------------------
+
+void f14_first_upper(){
+    string s;
+    if(!change){
+        change = true;
+        system("CLS");
+
+        data1.close();
+        data1.open(Ndata,ios::out);
+
+        dataFile.close();
+        dataFile.open(fileName,ios::in);
+        while (!dataFile.eof()){
+          getline(dataFile,s);
+          s[0]=toupper (s[0]);
+          for(int i=1; i<s.size(); i++){
+              if(s[i]==' ') {s[i+1]= toupper (s[i+1]); i++; }
+              else {s[i]= tolower (s[i]); }
+              }
+		data1 << s << "\n";
+        }
+
+        cout<<"\n\nDone :)";
+        sleep(3);
+    }
+    else{
+        cout<<"please save first...";
+        sleep(4);
+
+}
+}
+
+//-----------------------------------------------------------------------------
+
 void menu(){
 string s;
 
@@ -471,17 +570,17 @@ void f15_save(){
             dataFile.close();
             dataFile.open(fileName,ios::out);
 
-            data.close();
-            data.open(Ndata,ios::in);
+            data1.close();
+            data1.open(Ndata,ios::in);
 
-      while (!data.eof()) {
+      while (!data1.eof()) {
         string s;
-        getline(data,s);
+        getline(data1,s);
 		dataFile << s << '\n';
 	  }
 
             dataFile.close();
-            data.close();
+            data1.close();
 
         }
 
