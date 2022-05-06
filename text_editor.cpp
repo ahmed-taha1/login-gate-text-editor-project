@@ -189,7 +189,6 @@ void f3_empty(){
 }
 
 void f4_encrypt(){
-    char c;
     string s;
     int endl=0;
     if(!change){
@@ -203,10 +202,10 @@ void f4_encrypt(){
         dataFile.open(fileName,ios::in);
 
       while (!dataFile.eof()) {
-          getline(dataFile,s);
+        getline(dataFile,s);
           
-          for(int i=0; i<s.size(); i++){ s[i]+=1; }
-          
+        for(int i=0; i<s.size(); i++){ s[i]+=1; }
+            
 		data << s << '\n';
 	  }
         
