@@ -20,13 +20,15 @@
 #include <unistd.h>
 #include <Windows.h>
 #include<conio.h>
+#include<vector>
+#include<cctype>
 
 
 // initialize standard cpp
 using namespace std;
 
 // static variables
-fstream dataFile,data;	
+fstream dataFile,data;
 string fileName,Ndata="data.txt";
 bool change=false;
 
@@ -38,8 +40,17 @@ void f2_readFile();
 void f3_empty();
 void f4_encrypt();
 void f5_decrypt();
-
+void f6_merge_files();
+void f7_count_totalWords();
+void f8_count_chars();
+void f9_count_lines();
+string f10_search_word();
+void f11_count_words();
 void f15_save();
+
+//the other help functions
+void menu();
+string lower(string& str);
 
 // main function
 int main(){
@@ -50,15 +61,15 @@ int main(){
         cin.clear();
         system("CLS");
         cout<<"\n      *************** Main menu ***************        \n"
-            <<"1. Add new text to the end of the file                   \n"
-            <<"2. Display the content of the file                       \n"
-            <<"3. Empty the file                                        \n"
-            <<"4. Encrypt the file content                              \n"
-            <<"5. Decrypt the file content                              \n"
-            <<"6. Merge another file                                    \n"
-            <<"7. Count the number of words in the file                 \n"
-            <<"8. Count the number of characters in the file            \n"
-            <<"9. Count the number of lines in the file                 \n"
+            <<"1.  Add new text to the end of the file                   \n"
+            <<"2.  Display the content of the file                       \n"
+            <<"3.  Empty the file                                        \n"
+            <<"4.  Encrypt the file content                              \n"
+            <<"5.  Decrypt the file content                              \n"
+            <<"6.  Merge another file                                    \n"
+            <<"7.  Count the number of words in the file                 \n"
+            <<"8.  Count the number of characters in the file            \n"
+            <<"9.  Count the number of lines in the file                 \n"
             <<"10. Search for a word in the file                        \n"
             <<"11. Count the number of times a word exists in the file  \n"
             <<"12. Turn the file content to upper case                  \n"
@@ -69,7 +80,7 @@ int main(){
             <<"\n choose the operation that you want (enter number between 1,16): ";  cin>>choose;
 
             switch(choose){
-                
+
                 case 1:
                     f1_append();
                     break;
@@ -85,9 +96,38 @@ int main(){
                 case 4:
                     f4_encrypt();
                     break;
-                
+
                 case 5:
                     f5_decrypt();
+                    break;
+
+                case 6:
+                    f6_merge_files();
+                    menu();
+                    break;
+
+                case 7:
+                    f7_count_totalWords();
+                    menu();
+                    break;
+
+                case 8:
+                    f8_count_chars();
+                    menu();
+
+                case 9:
+                    f9_count_lines();
+                    menu();
+
+                case 10 :
+
+                    cout<<f10_search_word()<<endl;
+                    menu();
+                    break;
+
+                case 11:
+                    f11_count_words();
+                    menu();
                     break;
 
                 case 15:
@@ -108,10 +148,10 @@ int main(){
     f3_empty();
     data.close();
 }
-
+//-----------------------------------------------------------------------------
 void OpenFile(){
     cout << "Please enter a file name: ";  getline(cin,fileName, '\n');
-    
+
     if(fileName.find(".txt")==-1) {fileName+=".txt";}
 
 	dataFile.open(fileName, ios::in);
@@ -130,7 +170,7 @@ void OpenFile(){
     }
     dataFile.close();
 }
-
+//-----------------------------------------------------------------------------
 void duplicate(){
     string s;
     dataFile.close();
@@ -146,7 +186,7 @@ void duplicate(){
     data.close();
     dataFile.close();
 }
-
+//-----------------------------------------------------------------------------
 void f1_append(){
     change = true;
 
@@ -161,7 +201,7 @@ void f1_append(){
         data<<s<<'\n';
     }while(!cin.eof());
 }
-
+//-----------------------------------------------------------------------------
 void f2_readFile(){
     system("CLS");
     int p;
@@ -176,7 +216,7 @@ void f2_readFile(){
 
     dataFile.close();
 }
-
+//-----------------------------------------------------------------------------
 void f3_empty(){
     change = true;
     system("CLS");
@@ -184,10 +224,10 @@ void f3_empty(){
 
     data.open(Ndata, ios::out | ios::trunc);
     data.close();
-    cout<<"\n\nDone :)"; 
+    cout<<"\n\nDone :)";
     sleep(3);
 }
-
+//-----------------------------------------------------------------------------
 void f4_encrypt(){
     string s;
     int endl=0;
@@ -202,14 +242,21 @@ void f4_encrypt(){
         dataFile.open(fileName,ios::in);
 
       while (!dataFile.eof()) {
+<<<<<<< HEAD
         getline(dataFile,s);
           
         for(int i=0; i<s.size(); i++){ s[i]+=1; }
             
+=======
+          getline(dataFile,s);
+
+          for(int i=0; i<s.size(); i++){ s[i]+=1; }
+
+>>>>>>> 2e78ca2559d41fd4c8be3cc16d90b335cca84d98
 		data << s << '\n';
 	  }
-        
-        cout<<"\n\nDone :)"; 
+
+        cout<<"\n\nDone :)";
         sleep(3);
     }
     else{
@@ -217,7 +264,7 @@ void f4_encrypt(){
         sleep(4);
         }
 }
-
+//-----------------------------------------------------------------------------
 void f5_decrypt(){
     char c;
     string s;
@@ -236,8 +283,8 @@ void f5_decrypt(){
           for(int i=0; i<s.size(); i++){ s[i]-=1; }
 		data << s << "\n";
         }
-        
-        cout<<"\n\nDone :)"; 
+
+        cout<<"\n\nDone :)";
         sleep(3);
     }
     else{
@@ -245,6 +292,165 @@ void f5_decrypt(){
         sleep(4);
         }
 }
+//-----------------------------------------------------------------------------
+void f6_merge_files (){
+ string fileName2 , text;
+ cout<<"\nenter another file: ";
+ cin.clear();
+ cin.ignore();
+ getline(cin , fileName2);
+
+ ifstream ifile (fileName2+".txt" , ios::in);
+ dataFile.close();
+ dataFile.open(fileName,ios::out | ios::app | ios::in);
+
+
+
+ if(!ifile.is_open())
+    cout<<"\nInvalid file name."<<endl;
+
+ else
+ {
+   dataFile <<endl <<ifile.rdbuf();
+   dataFile.close();
+   ifile.close();
+   cout<<"\nthe merge process has been completed successfully :)"<<endl;
+ }
+
+}
+//-----------------------------------------------------------------------------
+void f7_count_totalWords(){
+    string s;
+    int sum = 0 ;
+    string word;
+    vector<string>words;
+
+    dataFile.close();
+    dataFile.open(fileName,ios::out | ios::app | ios::in);
+    data.close();
+    data.open(Ndata,ios::out | ios::app | ios::in);
+
+
+    while(dataFile>>word)
+        words.push_back(word);
+
+    for(string word : words)
+        sum++;
+
+
+
+    cout<<"\nthe number of words is: "<<sum<<endl;
+}
+//-----------------------------------------------------------------------------
+void f8_count_chars(){
+    int sum =0 ;
+    string text ;
+
+    dataFile.close();
+    dataFile.open(fileName,ios::out | ios::app | ios::in);
+    data.close();
+    data.open(Ndata,ios::out | ios::app | ios::in);
+
+
+
+   while(getline(dataFile , text)){
+
+      for(int i = 0 ; i <text.length() ; i++)
+          sum++;
+
+ }
+  cout<<"\nthe number of characters in the file is: "<<sum<<endl;
+}
+
+//-----------------------------------------------------------------------------
+
+void f9_count_lines(){
+int line = 0;
+string text;
+
+
+    dataFile.close();
+    dataFile.open(fileName,ios::out | ios::app | ios::in);
+    data.close();
+    data.open(Ndata,ios::out | ios::app | ios::in);
+
+
+    while (getline(dataFile ,text)){
+       line++;
+ }
+
+    cout<<"\nthe number of lines is: "<<line<<endl;
+
+}
+
+//-----------------------------------------------------------------------------
+string f10_search_word(){
+    string keyWord , s , word;
+    vector<string>words;
+    cout<<"\nenter the word to search for: ";
+    cin>>keyWord;
+
+
+    dataFile.close();
+    dataFile.open(fileName,ios::out | ios::app | ios::in);
+    data.close();
+    data.open(Ndata,ios::out | ios::app | ios::in);
+
+
+
+    while(dataFile>>word)
+        words.push_back(word);
+
+
+    for(string x : words){
+        if(lower(x) == lower(keyWord ))
+            return "\nword was found in the file :)";
+    }
+
+     return "\nword was not found in the file :(";
+
+}
+
+//-----------------------------------------------------------------------------
+
+void f11_count_words( ){
+    int sum =0 ;
+    string keyWord ,word ;
+    vector<string>words;
+    cout<<"\nenter the word to search for: ";
+    cin>>keyWord;
+
+    dataFile.close();
+    dataFile.open(fileName,ios::out | ios::app | ios::in);
+    data.close();
+    data.open(Ndata,ios::out | ios::app | ios::in);
+
+
+    while(dataFile>>word)
+        words.push_back(word);
+
+    for(string x : words){
+        if(lower(x) == lower(keyWord ))
+            sum++;
+    }
+
+cout<<"\nthe number of times ("<<keyWord<<")occured in the file: "<<sum<<endl;
+
+}
+
+//-----------------------------------------------------------------------------
+void menu(){
+string s;
+
+cout<<"\npress CTRL+Z and enter  to go back to main menu\n\n";
+    do
+    {   getline(cin,s,'\n');
+    }
+    while(!cin.eof());
+
+}
+
+//-----------------------------------------------------------------------------
 
 void f15_save(){
     start:
@@ -289,4 +495,11 @@ void f15_save(){
     }
     f3_empty();
     change=false;
+}
+
+string lower(string& str){
+for(int i =0 ;i <str.length() ; i++)
+    str[i] = tolower(str[i]);
+
+return str;
 }
