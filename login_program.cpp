@@ -1,6 +1,6 @@
 // FCAI – Programming 1 – 2022 - Assignment 4
 // Program Name: login_program.cpp
-// Program Description: login gate program 
+// Program Description: login gate program
 // Last Modification Date: 27/4/2022
 // Author1 and ID and Group: Ahmed Mohamed Taha - 20210033 - Group A - S8
 // Author2 and ID and Group: Doaa Mahdy Mohamed - 20210128 - Group A - S8
@@ -35,7 +35,7 @@ void ID_input();
 void password_input();
 
 // variables
-string email,id,password,phone,username,str,temp="temp.txt";
+string email,id,password,password2,phone,username,str,temp="temp.txt";
 fstream data;
 
 
@@ -80,7 +80,7 @@ void reg(){
     cout<<"     welcome in registeration center       \n";
     username_input();
     email_input();
-//  password_input();
+    password_input();
     phone_input();
     ID_input();
     cout<<"\nCON. successful registration";
@@ -92,7 +92,7 @@ void username_input(){
     cout<<"\nenter your username without spaces: ";
 
     getline(cin,username,'\n');
-    
+
     data.open(temp,ios::in);
 
     for(int i=0; i<username.size(); i++){
@@ -110,7 +110,7 @@ void username_input(){
             goto start;
         }
     }
-    
+
     for(int i=0; i<username.size(); i++){
         if(isspace(username[i])){
             cout<< "please enter the username without spaces";
@@ -135,7 +135,7 @@ void email_input(){
     if(regex_match(email,filter)!=1){cout<<"wrong format please try again.."; goto start2;}
 
     if(email.find('@')>64){cout<<"local part must be 64 or less than charcters please try again.."; goto start2;}
-    
+
     for(int i=0; i<email.size(); i++){
         if(email[i]=='.' && email[i+1]=='.')
         {cout<<"wrong format you can't use period '.' two times in raw please try again.."; goto start2;}
@@ -158,7 +158,7 @@ void email_input(){
     data.open(temp,ios::app);
     data<<email<<endl;
     data.close();
-    
+
 
 }
 
@@ -190,4 +190,80 @@ void ID_input(){
     data.close();
 }
 
-//void password_input();
+// note:i haven't completed it yet , i still have to store the entered passwords in an encrypted format
+
+void password_input(){
+
+// display a message to the user of how the password should be
+    start3:
+    system("CLS");
+   cout<<"your password should be:                               \n"
+       <<"-at least 6 characters                                 \n"
+       <<"-mixture of uppercase and lowercase letters            \n"
+       <<"-inclusion of at least one special character,e.g.,!@#? \n"
+       <<"-contain at least one number";
+
+
+//take a password from the user for registration
+   data.close();
+   cout<<"\n\nEnter your password: ";
+   string password;
+   int c = getch();
+
+        while(c!= 13){
+            if(c==8){
+
+                cout<<"\b \b";
+                password.pop_back();
+                goto label;
+            }
+            else{
+                password.push_back(c);
+                cout<<"*";
+                label:
+                c=getch();
+
+            }
+        }
+cout<<'\n'<<"only for tracing your password is "<<password<<endl;
+cout<<password<<endl;
+// check if the password entered follow the rules of strong password
+
+std::regex regexRule("(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[$_@!?,.])(?=.{6,})");
+bool is_valid = regex_search(password,regexRule);
+if(!is_valid){cout<<"\n\nthe password entered not strong enough...";sleep(5);goto start3;}
+
+
+// verifying password
+cout<<"\n\nEnter your password again: ";
+   string password2;
+   c = getch();
+
+        while(c!= 13){
+            if(c==8){
+
+                cout<<"\b \b";
+                password2.pop_back();
+                goto label2;
+            }
+            else{
+
+                password2.push_back(c);
+                cout<<"*";
+                label2:
+                c=getch();
+
+            }
+        }
+// check if the verified password equals the first password entered
+
+if(password != password2){cout<<"\nnot the same";sleep(5); goto start3;}
+
+else{
+    data.open(temp,ios::app);
+    data<<endl<<password<<endl;
+    data.close();
+}
+}
+
+
