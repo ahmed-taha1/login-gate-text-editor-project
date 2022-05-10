@@ -73,7 +73,7 @@ int main() {
 
 }
 
-
+//-----------------------------------------------------------------------------
 
 void reg(){
     system("CLS");
@@ -85,7 +85,7 @@ void reg(){
     ID_input();
     cout<<"\nCON. successful registration";
 }
-
+//-----------------------------------------------------------------------------
 void username_input(){
     start:
     data.close();
@@ -123,7 +123,7 @@ void username_input(){
     data<<endl<<username<<endl;
     data.close();
 }
-
+//-----------------------------------------------------------------------------
 void email_input(){
     start2:
     data.close();
@@ -161,7 +161,7 @@ void email_input(){
 
 
 }
-
+//-----------------------------------------------------------------------------
 void phone_input(){
     start3:
     regex filter("(01){1}(1|2|5|0){1}\\d{8}");
@@ -176,6 +176,7 @@ void phone_input(){
     data.close();
 }
 
+//-----------------------------------------------------------------------------
 void ID_input(){
     start3:
     regex filter("(_){0}[a-zA-Z]+\\s*(_)?[a-zA-Z]+");
@@ -190,8 +191,8 @@ void ID_input(){
     data.close();
 }
 
-// note:i haven't completed it yet , i still have to store the entered passwords in an encrypted format
 
+//-----------------------------------------------------------------------------
 void password_input(){
 
 // display a message to the user of how the password should be
@@ -225,8 +226,8 @@ void password_input(){
 
             }
         }
-cout<<'\n'<<"only for tracing your password is "<<password<<endl;
-cout<<password<<endl;
+cout<<'\n'<<"only for tracing , your password is "<<password<<endl;
+
 // check if the password entered follow the rules of strong password
 
 std::regex regexRule("(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[$_@!?,.])(?=.{6,})");
@@ -259,9 +260,12 @@ cout<<"\n\nEnter your password again: ";
 
 if(password != password2){cout<<"\nnot the same";sleep(5); goto start3;}
 
+// store the password entered in an encrypted format by adding 1 to all characters
 else{
     data.open(temp,ios::app);
-    data<<endl<<password<<endl;
+    for(int i=0; i<password.size(); i++){ password[i]+=1; }
+
+    data<< password<< endl;
     data.close();
 }
 }
