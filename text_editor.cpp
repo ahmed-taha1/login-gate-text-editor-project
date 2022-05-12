@@ -242,17 +242,10 @@ void f4_encrypt(){
         dataFile.open(fileName,ios::in);
 
       while (!dataFile.eof()) {
-<<<<<<< HEAD
         getline(dataFile,s);
           
         for(int i=0; i<s.size(); i++){ s[i]+=1; }
             
-=======
-          getline(dataFile,s);
-
-          for(int i=0; i<s.size(); i++){ s[i]+=1; }
-
->>>>>>> 2e78ca2559d41fd4c8be3cc16d90b335cca84d98
 		data << s << '\n';
 	  }
 
