@@ -220,7 +220,7 @@ void password_input(){
             }
             else{
                 password.push_back(c);
-                cout<<"*";
+                cout<<char(c);sleep(1);cout<<"\b \b";cout<<"*";
                 label:
                 c=getch();
 
@@ -230,7 +230,7 @@ cout<<'\n'<<"only for tracing , your password is "<<password<<endl;
 
 // check if the password entered follow the rules of strong password
 
-std::regex regexRule("(?=.*[a-z])(?=.*[a-z])(?=.*[0-9])(?=.*[$_@!?,.])(?=.{6,})");
+std::regex regexRule("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$_@!?,.])(?=.{6,})");
 bool is_valid = regex_search(password,regexRule);
 if(!is_valid){cout<<"\n\nthe password entered not strong enough...";sleep(5);goto start3;}
 
@@ -250,8 +250,9 @@ cout<<"\n\nEnter your password again: ";
             else{
 
                 password2.push_back(c);
-                cout<<"*";
+                cout<<char(c);sleep(1);cout<<"\b \b";cout<<"*";
                 label2:
+
                 c=getch();
 
             }
