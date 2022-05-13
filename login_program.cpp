@@ -56,11 +56,11 @@ int main() {
 
     switch (choose)
     {
-/*
+
         case 1:
             login();
             break;
-*/
+
         case 2:
             reg();
             break;
@@ -271,4 +271,62 @@ else{
 }
 }
 
+void login(){
+    start_log:
+    string user_login , pass_login , s1 , s2;
+    bool found = false , login = false ;
+    system("CLS");
+    cout<<"please enter your username: ";
+    cin>>user_login;
+    cout<<"please enter your password: ";
+    int c = getch();
+
+        while(c!= 13){
+            if(c==8){
+
+                cout<<"\b \b";
+                pass_login.pop_back();
+                goto label;
+            }
+            else{
+                pass_login.push_back(c);
+                cout<<"*";
+                label:
+                c=getch();
+
+            }
+        }
+
+    data.close();
+    data.open(temp,ios::out);
+    while (!data.eof())
+    {
+        getline(cin,s1);
+        if(s1==user_login){
+            found = true;
+            getline(cin,s2);
+            for (int i = 0; i<s2.size() ; i++)
+            {
+                s2[i]-= 1;
+            }
+            if(pass_login==s2){
+                login = true;
+            }  
+        }
+    }
+    if(!found){
+        cout<<"\nusername doesn't exist, please try again..." ;
+        sleep(5);
+        goto start_log ;
+    }
+    if(!login){
+        cout<<"\nwrong password , please try again..." ;
+        sleep(5);
+        goto start_log ;
+    }
+    if(login){
+        cout<<"\nSuccessful login...";
+        sleep(5);
+    }
+}
 
